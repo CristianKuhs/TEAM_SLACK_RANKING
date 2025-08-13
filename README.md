@@ -2,97 +2,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Pontuação</title>
+    <title>Team Building Scoreboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --highlight-color: #4a90e2;
+            --primary-btn-color: #50e3c2;
+            --secondary-btn-color: #383838;
+            --border-color: #333;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+        }
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             margin: 0;
-            background: #0f172a;
-            color: #f1f5f9;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             padding: 20px;
+            min-height: 100vh;
         }
         #dashboard-container {
-            background: rgba(30, 41, 59, 0.8);
-            padding: 20px;
-            border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--shadow-color);
             width: 100%;
-            max-width: 900px;
+            max-width: 950px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr auto;
+            gap: 25px;
+            grid-template-areas:
+                "header header"
+                "users ranking"
+                "points points"
+                "actions actions";
         }
-        h1, h2 {
+        h1 {
+            grid-area: header;
             text-align: center;
+            font-size: 2.8rem;
+            color: var(--highlight-color);
             margin-bottom: 20px;
         }
-        button {
-            display: block;
-            margin: 0 auto 20px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(90deg, #2563eb, #3b82f6);
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.3s;
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-        button:hover {
-            transform: scale(1.05);
-            background: linear-gradient(90deg, #1d4ed8, #2563eb);
+        h2 {
+            font-size: 1.6rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #users-list-container {
+            grid-area: users;
+        }
+        #ranking-container {
+            grid-area: ranking;
+        }
+        #points-container {
+            grid-area: points;
+        }
+        #actions-container {
+            grid-area: actions;
+            text-align: center;
+        }
+        button {
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        #clear-data-btn {
+            background-color: #d9534f;
+            color: white;
+            width: fit-content;
+            margin: 0 auto;
+        }
+        #clear-data-btn:hover {
+            background-color: #c9302c;
+            transform: translateY(-2px);
+        }
+        .clear-btn-wrapper {
+            margin-top: 20px;
+            text-align: center;
         }
         ul, ol {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
         .options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
         }
         .option-btn {
-            background: #334155;
-            border: none;
-            padding: 10px;
+            background-color: var(--secondary-btn-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            text-align: left;
+            padding: 15px;
             border-radius: 8px;
-            cursor: pointer;
-            color: #f1f5f9;
-            transition: 0.3s;
         }
         .option-btn:hover {
-            background: #475569;
+            background-color: #555;
+            transform: translateY(-2px);
         }
         li {
-            background: #1e293b;
-            padding: 8px;
-            border-radius: 6px;
-            margin-bottom: 5px;
+            background-color: #2b2b2b;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border: 1px solid var(--border-color);
+        }
+        li span {
+            font-weight: 600;
+        }
+        /* Classes específicas para o ranking */
+        .ranking-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .ranking-item .position {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--highlight-color);
+            margin-right: 15px;
+        } 
+        @media (max-width: 768px) {
+            #dashboard-container {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "header"
+                    "users"
+                    "ranking"
+                    "points"
+                    "actions";
+                padding: 20px;
+            }     
+            h1 {
+                font-size: 2.2rem;
+            }
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div id="dashboard-container">
-        <h1>Dashboard de Pontuação</h1>
-        <button id="clear-data-btn">Limpar Dados</button>
-        <div id="users-list-container">
-            <h2>Usuários</h2>
+        <h1>Team Building Scoreboard</h1>
+        <div id="users-list-container" class="card">
+            <h2><i class="fas fa-users"></i> Membros do Time</h2>
             <ul id="users-list"></ul>
         </div>
-        <div id="points-container">
-            <h2>Pontuação</h2>
+        <div id="ranking-container" class="card">
+            <h2><i class="fas fa-trophy"></i> Ranking</h2>
+            <ol id="ranking-list"></ol>
+        </div>
+        <div id="points-container" class="card">
+            <h2><i class="fas fa-star"></i> Pontuações</h2>
             <div id="points-options" class="options-grid"></div>
         </div>
-        <div id="ranking-container">
-            <h2>Ranking</h2>
-            <ol id="ranking-list"></ol>
+        <div id="actions-container">
+            <button id="clear-data-btn">Limpar Dados</button>
         </div>
     </div>
     <script>
@@ -118,7 +216,7 @@
             usersList.innerHTML = "";
             users.forEach(user => {
                 const li = document.createElement("li");
-                li.textContent = `${user} - ${scores[user] || 0} pts`;
+                li.innerHTML = `<span><i class="fas fa-user-circle"></i> ${user}</span><span>${scores[user] || 0} pts</span>`;
                 usersList.appendChild(li);
             });
         }
@@ -133,7 +231,7 @@
             });
         }
         function addPoints(value) {
-            const user = prompt("Digite o nome do usuário:");       
+            const user = prompt("Digite o nome do usuário:");
             if (!user) {
                 return;
             }
@@ -143,16 +241,18 @@
                 return;
             }
             scores[foundUser] = (scores[foundUser] || 0) + value;
-            localStorage.setItem("scores", JSON.stringify(scores)); 
+            localStorage.setItem("scores", JSON.stringify(scores));
             renderUsers();
             renderRanking();
         }
         function renderRanking() {
             const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
             rankingList.innerHTML = "";
-            sorted.forEach(([user, points]) => {
+            sorted.forEach(([user, points], index) => {
                 const li = document.createElement("li");
-                li.textContent = `${user} - ${points} pts`;
+                let iconClass = "fas fa-trophy";
+                if (index === 0) iconClass += " first-place"; 
+                li.innerHTML = `<div class="ranking-item"><span><i class="${iconClass}"></i> ${user}</span><span>${points} pts</span></div>`;
                 rankingList.appendChild(li);
             });
         }
