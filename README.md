@@ -3,6 +3,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard de Pontuação</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -69,6 +72,9 @@
             padding: 8px;
             border-radius: 6px;
             margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     </style>
 </head>
@@ -94,15 +100,20 @@
         const pointsOptions = [
             { label: "Bom dia ao chegar (Em cada salão)!", value: 1 },
             { label: "Boa tarde ao retornar/chegar (Em cada salão)!", value: 1 },
-            { label: "Tchau ao ir embora (em cada salão)!", value: 1 }
-            { label: "Bom dia/Boa tarde na cozinha sempre que entrar e tiver outra(s) pessoa(s)!", value: 3 }
+            { label: "Tchau ao ir embora (em cada salão)!", value: 1 },
+            { label: "Bom dia/Boa tarde na cozinha sempre que entrar e tiver outra(s) pessoa(s)!", value: 3 },
             { label: "Ao descer, passar no Comercial e dar Bom dia/Boa tarde!", value: 5 }
         ];
         const usersList = document.getElementById("users-list");
         const pointsContainer = document.getElementById("points-options");
         const rankingList = document.getElementById("ranking-list");
         const clearBtn = document.getElementById("clear-data-btn");
-        let scores = JSON.parse(localStorage.getItem("scores")) || {};
+        let scores = JSON.parse(localStorage.getItem("scores"));
+        if (!scores) {
+            scores = {};
+            users.forEach(user => scores[user] = 0);
+            localStorage.setItem("scores", JSON.stringify(scores));
+        }
         function renderUsers() {
             usersList.innerHTML = "";
             users.forEach(user => {
@@ -122,13 +133,17 @@
             });
         }
         function addPoints(value) {
-            const user = prompt("Digite o nome do usuário:");
-            if (!users.includes(user)) {
+            const user = prompt("Digite o nome do usuário:");       
+            if (!user) {
+                return;
+            }
+            const foundUser = users.find(u => u.toLowerCase() === user.toLowerCase());
+            if (!foundUser) {
                 alert("Usuário não encontrado!");
                 return;
             }
-            scores[user] = (scores[user] || 0) + value;
-            localStorage.setItem("scores", JSON.stringify(scores));
+            scores[foundUser] = (scores[foundUser] || 0) + value;
+            localStorage.setItem("scores", JSON.stringify(scores)); 
             renderUsers();
             renderRanking();
         }
@@ -144,7 +159,8 @@
         clearBtn.onclick = () => {
             if (confirm("Tem certeza que deseja limpar os dados?")) {
                 scores = {};
-                localStorage.removeItem("scores");
+                users.forEach(user => scores[user] = 0);
+                localStorage.setItem("scores", JSON.stringify(scores));
                 renderUsers();
                 renderRanking();
             }
