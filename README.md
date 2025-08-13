@@ -90,11 +90,13 @@
         </div>
     </div>
     <script>
-        const users = ["Alice", "Bruno", "Carla", "Diego"];
+        const users = ["Cristian", "Eduardo", "Emanuela", "Kauane", "Lipe", "Pamela", "Patrick", "Pedro Henrique", "Pedro Leite", "Richard", "Thais", "Vitória"];
         const pointsOptions = [
-            { label: "Bom dia", value: 1 },
-            { label: "Boa tarde", value: 2 },
-            { label: "Boa noite", value: 3 }
+            { label: "Bom dia ao chegar (Em cada salão)!", value: 1 },
+            { label: "Boa tarde ao retornar/chegar (Em cada salão)!", value: 1 },
+            { label: "Tchau ao ir embora (em cada salão)!", value: 1 }
+            { label: "Bom dia/Boa tarde na cozinha sempre que entrar e tiver outra(s) pessoa(s)!", value: 3 }
+            { label: "Ao descer, passar no Comercial e dar Bom dia/Boa tarde!", value: 5 }
         ];
         const usersList = document.getElementById("users-list");
         const pointsContainer = document.getElementById("points-options");
