@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Team Building Scoreboard</title>
+  <title>Ranking da Equipe</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -133,7 +133,7 @@
 </head>
 <body>
   <div id="dashboard">
-    <h1>Team Building Scoreboard</h1>
+    <h1>Ranking da Equipe</h1>
     <!-- Regras -->
     <div class="card rules">
       <h2>Regras de Pontuação</h2>
@@ -150,6 +150,7 @@
       <h2>Membros do Time</h2>
       <ul id="users-list"></ul>
       <button onclick="showAddUser()">Adicionar Membro</button>
+      <button onclick="showUserModal()">Adicionar Pontos</button>
     </div>
     <!-- Ranking -->
     <div class="card" id="ranking">
@@ -228,4 +229,64 @@ function closeModal(){ document.getElementById("user-modal").style.display="none
 function applyManualPoints(){
   const val=parseInt(document.getElementById("manual-points").value);
   if(currentUser && !isNaN(val)){
-    scores[currentUs]()
+    scores[currentUser]=(scores[currentUser]||0)+val;
+    saveData(); renderUsers(); renderRanking();
+    document.getElementById("manual-points").value="";
+    closeModal();
+  } else {
+    alert("Selecione um usuário e insira pontos.");
+  }
+}
+function removeUser(name){
+  if(confirm(`Remover ${name}?`)){
+    users.splice(users.indexOf(name),1);
+    delete scores[name];
+    saveData(); renderUsers(); renderRanking();
+  }
+}
+function showAddUser(){
+  const name=prompt("Nome do novo membro:");
+  if(name && !users.includes(name)){
+    users.push(name);
+    scores[name]=0;
+    saveData(); renderUsers(); renderRanking();
+  }
+}
+function resetData(){
+  scores={}; users.forEach(u=>scores[u]=0);
+  saveData(); renderUsers(); renderRanking();
+}
+// Contagem regressiva para fechamento (20 dias úteis)
+function getWorkingDays(from){
+  let days=0, d=new Date(from);
+  while(days<20){
+    d.setDate(d.getDate()+1);
+    if(d.getDay()!=0 && d.getDay()!=6) days++;
+  }
+  return d;
+}
+let closingDate=getWorkingDays(new Date()); // a partir de hoje
+function updateTimer(){
+  const now=new Date();
+  let diff=closingDate-now;
+  if(diff<=0){
+    // Fecha ciclo
+    const champion=Object.entries(scores).sort((a,b)=>b[1]-a[1])[0];
+    if(champion) lastChampion=champion[0];
+    resetData();
+    closingDate=getWorkingDays(new Date());
+  }
+  let days=Math.floor(diff/(1000*60*60*24));
+  let hours=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  let mins=Math.floor((diff%(1000*60*60))/(1000*60));
+  let secs=Math.floor((diff%(1000*60))/1000);
+  document.getElementById("timer").textContent=`${days}d ${hours}h ${mins}m ${secs}s`;
+}
+setInterval(updateTimer,1000);
+updateTimer();
+// Inicializa
+renderUsers();
+renderRanking();
+</script>
+</body>
+</html>
