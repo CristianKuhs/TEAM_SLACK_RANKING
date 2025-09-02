@@ -22,7 +22,6 @@
             --silver: #C0C0C0;
             --bronze: #CD7F32;
         }
-
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
@@ -34,7 +33,6 @@
             padding: 20px;
             min-height: 100vh;
         }
-
         #dashboard-container {
             background-color: var(--card-bg);
             padding: 30px;
@@ -52,7 +50,6 @@
                 "points points"
                 "actions actions";
         }
-
         h1 {
             grid-area: header;
             text-align: center;
@@ -60,7 +57,6 @@
             color: var(--highlight-color);
             margin-bottom: 20px;
         }
-
         .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -68,7 +64,6 @@
             padding: 20px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-
         h2 {
             font-size: 1.6rem;
             margin-top: 0;
@@ -79,24 +74,19 @@
             align-items: center;
             gap: 10px;
         }
-
         #users-list-container {
             grid-area: users;
         }
-
         #ranking-container {
             grid-area: ranking;
         }
-
         #points-container {
             grid-area: points;
         }
-        
         #actions-container {
             grid-area: actions;
             text-align: center;
         }
-
         button {
             border: none;
             padding: 12px 24px;
@@ -107,36 +97,30 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
         }
-
         #clear-data-btn {
             background-color: #d9534f;
             color: white;
             width: fit-content;
             margin: 0 auto;
         }
-
         #clear-data-btn:hover {
             background-color: #c9302c;
             transform: translateY(-2px);
         }
-        
         .clear-btn-wrapper {
             margin-top: 20px;
             text-align: center;
         }
-
         ul, ol {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-
         .options-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 15px;
         }
-
         .option-btn {
             background-color: var(--secondary-btn-color);
             border: 1px solid var(--border-color);
@@ -145,12 +129,10 @@
             padding: 15px;
             border-radius: 8px;
         }
-
         .option-btn:hover {
             background-color: #555;
             transform: translateY(-2px);
         }
-
         li {
             background-color: #2b2b2b;
             padding: 12px 15px;
@@ -161,11 +143,9 @@
             align-items: center;
             border: 1px solid var(--border-color);
         }
-        
         li span {
             font-weight: 600;
         }
-
         /* Modal para seleção de usuário */
         .modal {
             display: none;
@@ -180,7 +160,6 @@
             justify-content: center;
             align-items: center;
         }
-
         .modal-content {
             background-color: var(--card-bg);
             padding: 25px;
@@ -189,21 +168,18 @@
             max-width: 400px;
             box-shadow: 0 5px 15px var(--shadow-color);
         }
-
         .modal-content h3 {
             margin-top: 0;
             font-size: 1.5rem;
             text-align: center;
             color: var(--highlight-color);
         }
-
         .modal-content .user-option-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 10px;
             margin-top: 20px;
         }
-
         .modal-content .user-option-btn {
             background-color: var(--secondary-btn-color);
             border: 1px solid var(--border-color);
@@ -213,26 +189,22 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-
         .modal-content .user-option-btn:hover {
             background-color: var(--highlight-color);
             color: var(--card-bg);
             transform: scale(1.05);
         }
-
         .close-btn {
             color: var(--text-color);
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
-
         .close-btn:hover, .close-btn:focus {
             color: #d9534f;
             text-decoration: none;
             cursor: pointer;
-        }
-        
+        }  
         /* Classes de cor para o ranking */
         .ranking-item {
             display: flex;
@@ -240,7 +212,6 @@
             align-items: center;
             width: 100%;
         }
-
         .ranking-item .rank-number {
             font-size: 1.2rem;
             font-weight: 700;
@@ -248,36 +219,29 @@
             display: inline-block;
             width: 25px;
             text-align: center;
-        }
-        
+        }  
         .ranking-item span {
             flex-grow: 1;
             margin-left: 10px;
         }
-
         .ranking-item .points {
             font-weight: 700;
         }
-
         .ranking-item.first-place {
             color: var(--gold);
         }
-        
         .ranking-item.second-place {
             color: var(--silver);
         }
-        
         .ranking-item.third-place {
             color: var(--bronze);
-        }
-        
+        }    
         .ranking-item.first-place .rank-number { color: var(--gold); }
         .ranking-item.second-place .rank-number { color: var(--silver); }
         .ranking-item.third-place .rank-number { color: var(--bronze); }
         .ranking-item.first-place .points { color: var(--gold); }
         .ranking-item.second-place .points { color: var(--silver); }
         .ranking-item.third-place .points { color: var(--bronze); }
-
         @media (max-width: 768px) {
             #dashboard-container {
                 grid-template-columns: 1fr;
@@ -288,12 +252,10 @@
                     "points"
                     "actions";
                 padding: 20px;
-            }
-            
+            }          
             h1 {
                 font-size: 2.2rem;
-            }
-            
+            }   
             .options-grid {
                 grid-template-columns: 1fr;
             }
@@ -327,13 +289,13 @@
         </div>
     </div>
     <script>
-        const users = ["Cristian", "Eduardo", "Emanuela", "Kauane", "Lipe", "Pamela", "Patrick", "Pedro Henrique", "Pedro Leite", "Richard", "Thais", "Vitória"];
+        const users = ["Cristian", "Eduardo", "Emanuela", "Pamela", "Patrick", "Pedro Henrique", "Pedro Leite", "Richard", "Thais", "Vitória"];
         const pointsOptions = [
-            { label: "Bom dia ao chegar (Em cada salão)!", value: 1 },
-            { label: "Boa tarde ao retornar/chegar (Em cada salão)!", value: 1 },
-            { label: "Tchau ao ir embora (em cada salão)!", value: 1 },
-            { label: "Bom dia/Boa tarde na cozinha sempre que entrar e tiver outra(s) pessoa(s)!", value: 3 },
-            { label: "Ao descer, passar no Comercial e dar Bom dia/Boa tarde!", value: 5 }
+            { label: "Bom dia ao chegar (Em cada salão)!"},
+            { label: "Boa tarde ao retornar/chegar (Em cada salão)!"},
+            { label: "Tchau ao ir embora (em cada salão)!"},
+            { label: "Bom dia/Boa tarde na cozinha sempre que entrar e tiver outra(s) pessoa(s)!"},
+            { label: "Ao descer, passar no Comercial e dar Bom dia/Boa tarde!"}
         ];
         const usersList = document.getElementById("users-list");
         const pointsContainer = document.getElementById("points-options");
